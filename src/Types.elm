@@ -1,8 +1,12 @@
 module Types exposing (..)
 
+import Header.Types
+
 type alias Model =
-  { name: String
-  }
+    { name: String
+    , header: Header.Types.Model
+    }
 
 type Msg
-  = Name String
+    = SetLeagueName String
+    | SetUserName String
