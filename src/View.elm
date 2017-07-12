@@ -1,10 +1,11 @@
 module View exposing (view)
 
-import Types
 import Header.View
-import Html exposing (Html, div, h1, text, input)
-import Html.Attributes exposing (type_, placeholder)
+import Html exposing (Html, div, h1, input, text)
+import Html.Attributes exposing (placeholder, type_)
 import Html.Events exposing (onInput)
+import Types
+
 
 view : Types.Model -> Html Types.Msg
 view model =

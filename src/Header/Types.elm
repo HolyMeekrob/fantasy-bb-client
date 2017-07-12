@@ -1,14 +1,17 @@
 module Header.Types exposing (..)
 
+
 type alias Model =
-    { user: User
+    { user : User
     }
 
-type Msg =
-    NoOp
+
+type Msg
+    = NoOp
+
 
 type alias User =
-    { firstName: String
-    , lastName: String
-    , email: String
+    { firstName : String
+    , lastName : String
+    , email : String
     }

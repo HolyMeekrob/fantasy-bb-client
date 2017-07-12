@@ -1,22 +1,24 @@
-module Header.State exposing (init, update, subscriptions)
+module Header.State exposing (init, subscriptions, update)
 
 import Header.Types exposing (Model, Msg)
 
-init : (Model, Cmd Msg)
+
+init : ( Model, Cmd Msg )
 init =
-    (
-        { user =
+    ( { user =
             { firstName = ""
             , lastName = ""
             , email = ""
             }
-        }
-        , Cmd.none
+      }
+    , Cmd.none
     )
 
-update : Msg -> Model -> (Model, Cmd Msg)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
-    (model, Cmd.none)
+    ( model, Cmd.none )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =

@@ -1,23 +1,24 @@
-module State exposing (init, update, subscriptions)
+module State exposing (init, subscriptions, update)
 
-import Types exposing (Model, Msg)
-import Header.Types
 import Header.State
+import Header.Types
+import Types exposing (Model, Msg)
 
-init : (Model, Cmd Msg)
+
+init : ( Model, Cmd Msg )
 init =
     let
-        ( headerModel, headerMsg ) = Header.State.init
-
+        ( headerModel, headerMsg ) =
+            Header.State.init
     in
-        (
-            { name = "Fantasy Big Brother League"
-            , header = headerModel
-            }
-            , Cmd.none
-        )
+    ( { name = "Fantasy Big Brother League"
+      , header = headerModel
+      }
+    , Cmd.none
+    )
 
-update : Msg -> Model -> (Model, Cmd Msg)
+
+update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
     case action of
         Types.SetLeagueName newName ->
@@ -26,9 +27,11 @@ update action model =
         Types.SetUserName name ->
             ( { model | header = updateHeader model.header name }, Cmd.none )
 
+
 updateHeader : Header.Types.Model -> String -> Header.Types.Model
 updateHeader headerModel name =
     { headerModel | user = updateUser headerModel.user name }
+
 
 updateUser : Header.Types.User -> String -> Header.Types.User
 updateUser user name =
