@@ -1,14 +1,23 @@
 module Types exposing (..)
 
 import Header.Types
+import Http
 
 
 type alias Model =
-    { name : String
+    { league : League
     , header : Header.Types.Model
+    , error : String
+    }
+
+
+type alias League =
+    { id : Int
+    , name : String
     }
 
 
 type Msg
-    = SetLeagueName String
+    = SetLeague (Result Http.Error League)
+    | SetLeagueName String
     | SetUserName String

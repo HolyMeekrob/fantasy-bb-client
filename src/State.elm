@@ -2,7 +2,8 @@ module State exposing (init, subscriptions, update)
 
 import Header.State
 import Header.Types
-import Types exposing (Model, Msg)
+import Rest
+import Types exposing (League, Model, Msg)
 
 
 init : ( Model, Cmd Msg )
@@ -11,21 +12,36 @@ init =
         ( headerModel, headerMsg ) =
             Header.State.init
     in
-    ( { name = "Fantasy Big Brother League"
+    ( { league =
+            { id = 0
+            , name = ""
+            }
       , header = headerModel
+      , error = ""
       }
-    , Cmd.none
+    , Rest.getLeague
     )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
     case action of
+        Types.SetLeague (Err _) ->
+            ( { model | error = "Could not retrieve league information" }, Cmd.none )
+
+        Types.SetLeague (Ok newLeague) ->
+            ( { model | league = newLeague, error = "" }, Cmd.none )
+
         Types.SetLeagueName newName ->
-            ( { model | name = newName }, Cmd.none )
+            ( { model | league = updateLeagueName model.league newName, error = "" }, Cmd.none )
 
         Types.SetUserName name ->
-            ( { model | header = updateHeader model.header name }, Cmd.none )
+            ( { model | header = updateHeader model.header name, error = "" }, Cmd.none )
+
+
+updateLeagueName : League -> String -> League
+updateLeagueName league newName =
+    { league | name = newName }
 
 
 updateHeader : Header.Types.Model -> String -> Header.Types.Model
