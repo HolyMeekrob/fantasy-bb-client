@@ -3,7 +3,7 @@ module State exposing (init, subscriptions, update)
 import Header.State
 import Header.Types
 import Rest
-import Types exposing (League, Model, Msg)
+import Types exposing (League, Model, Msg, Standings)
 
 
 init : ( Model, Cmd Msg )
@@ -12,46 +12,28 @@ init =
         ( headerModel, headerMsg ) =
             Header.State.init
     in
-    ( { league =
-            { id = 0
-            , name = ""
+    ( { standings =
+            { league =
+                { id = 0
+                , name = ""
+                }
+            , teams = []
             }
       , header = headerModel
       , error = ""
       }
-    , Rest.getLeague
+    , Rest.getStandings
     )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update action model =
     case action of
-        Types.SetLeague (Err _) ->
-            ( { model | error = "Could not retrieve league information" }, Cmd.none )
+        Types.SetStandings (Err _) ->
+            ( { model | error = "Could not retrieve standings" }, Cmd.none )
 
-        Types.SetLeague (Ok newLeague) ->
-            ( { model | league = newLeague, error = "" }, Cmd.none )
-
-        Types.SetLeagueName newName ->
-            ( { model | league = updateLeagueName model.league newName, error = "" }, Cmd.none )
-
-        Types.SetUserName name ->
-            ( { model | header = updateHeader model.header name, error = "" }, Cmd.none )
-
-
-updateLeagueName : League -> String -> League
-updateLeagueName league newName =
-    { league | name = newName }
-
-
-updateHeader : Header.Types.Model -> String -> Header.Types.Model
-updateHeader headerModel name =
-    { headerModel | user = updateUser headerModel.user name }
-
-
-updateUser : Header.Types.User -> String -> Header.Types.User
-updateUser user name =
-    { user | firstName = name }
+        Types.SetStandings (Ok newStandings) ->
+            ( { model | standings = newStandings, error = "" }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

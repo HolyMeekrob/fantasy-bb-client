@@ -5,9 +5,15 @@ import Http
 
 
 type alias Model =
-    { league : League
+    { standings : Standings
     , header : Header.Types.Model
     , error : String
+    }
+
+
+type alias Standings =
+    { league : League
+    , teams : List Team
     }
 
 
@@ -17,7 +23,13 @@ type alias League =
     }
 
 
+type alias Team =
+    { id : Int
+    , name : String
+    , points : Int
+    , activePlayers : Int
+    }
+
+
 type Msg
-    = SetLeague (Result Http.Error League)
-    | SetLeagueName String
-    | SetUserName String
+    = SetStandings (Result Http.Error Standings)
