@@ -1,7 +1,8 @@
 module View exposing (view)
 
 import Header.View
-import Html exposing (Html, div, h1, input, table, tbody, td, text, thead, tr)
+import Html exposing (Html, a, div, h1, input, table, tbody, td, text, thead, tr)
+import Html.Attributes exposing (href)
 import Types
 
 
@@ -58,7 +59,10 @@ teamStandings team =
         []
         [ td
             []
-            [ text team.name ]
+            [ a
+                [ href team.url ]
+                [ text team.name ]
+            ]
         , td
             []
             [ text <| toString team.points ]

@@ -1,7 +1,6 @@
 module State exposing (init, subscriptions, update)
 
 import Header.State
-import Header.Types
 import Rest
 import Types exposing (League, Model, Msg, Standings)
 

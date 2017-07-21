@@ -24,10 +24,11 @@ type alias League =
 
 
 type alias Team =
-    { id : Int
+    { id : String
     , name : String
     , points : Int
     , activePlayers : Int
+    , url : String
     }
 
 

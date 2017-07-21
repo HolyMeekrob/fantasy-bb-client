@@ -33,7 +33,8 @@ leagueDecoder =
 teamDecoder : Decoder Types.Team
 teamDecoder =
     decode Types.Team
-        |> required "id" int
+        |> required "id" string
         |> required "name" string
         |> required "points" int
         |> required "activePlayers" int
+        |> required "url" string
