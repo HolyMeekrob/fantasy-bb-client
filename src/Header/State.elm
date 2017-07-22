@@ -1,18 +1,16 @@
-module Header.State exposing (init, subscriptions, update)
+module Header.State exposing (initialModel, subscriptions, update)
 
 import Header.Types exposing (Model, Msg)
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { user =
-            { firstName = ""
-            , lastName = ""
-            , email = ""
-            }
-      }
-    , Cmd.none
-    )
+initialModel : Model
+initialModel =
+    { user =
+        { firstName = ""
+        , lastName = ""
+        , email = ""
+        }
+    }
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )

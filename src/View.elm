@@ -1,72 +1,39 @@
 module View exposing (view)
 
-import Header.View
-import Html exposing (Html, a, div, h1, input, table, tbody, td, text, thead, tr)
-import Html.Attributes exposing (href)
+import Html exposing (Html, h1, text)
+import Standings.View
 import Types
 
 
 view : Types.Model -> Html Types.Msg
 view model =
-    div
+    case model.page of
+        Types.NotFound ->
+            notFound model
+
+        Types.Standings ->
+            standings model
+
+        Types.Team id ->
+            team model
+
+
+notFound : Types.Model -> Html Types.Msg
+notFound model =
+    h1
         []
-        [ Header.View.view model.header
-        , div
-            []
-            [ text model.error ]
-        , div
-            []
-            [ h1
-                []
-                [ text model.standings.league.name
-                ]
-            , div
-                []
-                [ leagueStandings <| List.reverse <| List.sortBy .points model.standings.teams
-                ]
-            ]
-        ]
+        [ text "Not Found" ]
 
 
-leagueStandings : List Types.Team -> Html msg
-leagueStandings teams =
-    table
+standings : Types.Model -> Html Types.Msg
+standings model =
+    Html.div
         []
-        [ thead
-            []
-            [ tr
-                []
-                [ td
-                    []
-                    [ text "Team" ]
-                , td
-                    []
-                    [ text "Points" ]
-                , td
-                    []
-                    [ text "Active Players" ]
-                ]
-            ]
-        , tbody
-            []
-            (List.map teamStandings teams)
-        ]
+        [ Standings.View.view model.standings ]
 
 
-teamStandings : Types.Team -> Html msg
-teamStandings team =
-    tr
+team : Types.Model -> Html Types.Msg
+team model =
+    h1
         []
-        [ td
-            []
-            [ a
-                [ href team.url ]
-                [ text team.name ]
-            ]
-        , td
-            []
-            [ text <| toString team.points ]
-        , td
-            []
-            [ text <| toString team.activePlayers ]
-        ]
+        [ text "Team" ]

@@ -1,6 +1,6 @@
 module App exposing (main)
 
-import Html
+import Navigation
 import State
 import Types
 import View
@@ -8,7 +8,7 @@ import View
 
 main : Program Never Types.Model Types.Msg
 main =
-    Html.program
+    Navigation.program Types.Navigate
         { init = State.init
         , update = State.update
         , subscriptions = State.subscriptions

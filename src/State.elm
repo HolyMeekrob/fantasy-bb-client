@@ -1,38 +1,57 @@
 module State exposing (init, subscriptions, update)
 
-import Header.State
-import Rest
-import Types exposing (League, Model, Msg, Standings)
+import Navigation exposing (Location)
+import Routes
+import Standings.State
+import Types exposing (Model, Msg)
 
 
-init : ( Model, Cmd Msg )
-init =
+initializeModel : Types.Page -> ( Model, Cmd Msg )
+initializeModel page =
     let
-        ( headerModel, headerMsg ) =
-            Header.State.init
+        ( initialStandings, msg ) =
+            Standings.State.initializeModel
     in
-    ( { standings =
-            { league =
-                { id = 0
-                , name = ""
-                }
-            , teams = []
-            }
-      , header = headerModel
-      , error = ""
+    ( { page = page
+      , standings = initialStandings
       }
-    , Rest.getStandings
+    , Cmd.map (\x -> Types.StandingsMsg x) msg
     )
 
 
-update : Msg -> Model -> ( Model, Cmd Msg )
-update action model =
-    case action of
-        Types.SetStandings (Err _) ->
-            ( { model | error = "Could not retrieve standings" }, Cmd.none )
+init : Location -> ( Model, Cmd Msg )
+init location =
+    let
+        page =
+            Routes.route location
 
-        Types.SetStandings (Ok newStandings) ->
-            ( { model | standings = newStandings, error = "" }, Cmd.none )
+        initialModel =
+            initializeModel
+    in
+    initializeModel page
+
+
+update : Msg -> Model -> ( Model, Cmd Msg )
+update msg model =
+    case msg of
+        Types.Navigate location ->
+            let
+                page =
+                    Routes.route location
+            in
+            navigate page model
+
+        Types.StandingsMsg subaction ->
+            let
+                ( standingsModel, standingsCmd ) =
+                    Standings.State.update subaction model.standings
+            in
+            ( { model | standings = standingsModel }, Cmd.none )
+
+
+navigate : Types.Page -> Model -> ( Model, Cmd Msg )
+navigate page model =
+    ( { model | page = page }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

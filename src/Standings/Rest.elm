@@ -1,9 +1,9 @@
-module Rest exposing (getStandings)
+module Standings.Rest exposing (getStandings)
 
 import Http
 import Json.Decode exposing (Decoder, field, int, list, string)
 import Json.Decode.Pipeline exposing (decode, required)
-import Types
+import Standings.Types as Types
 
 
 standingsDecoder : Decoder Types.Standings
