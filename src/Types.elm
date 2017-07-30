@@ -1,11 +1,13 @@
 module Types exposing (..)
 
+import Header.Types
 import Navigation exposing (Location)
 import Standings.Types
 
 
 type alias Model =
-    { page : Page
+    { header : Header.Types.Model
+    , page : Page
     , standings : Standings.Types.Model
     }
 

@@ -1,6 +1,5 @@
 module Standings.View exposing (view)
 
-import Header.View
 import Html exposing (Html, a, div, h1, input, table, tbody, td, text, thead, tr)
 import Html.Attributes exposing (href)
 import Standings.Types as Types
@@ -10,8 +9,7 @@ view : Types.Model -> Html msg
 view model =
     div
         []
-        [ Header.View.view model.header
-        , div
+        [ div
             []
             [ text model.error ]
         , div

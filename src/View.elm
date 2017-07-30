@@ -1,6 +1,7 @@
 module View exposing (view)
 
-import Html exposing (Html, h1, text)
+import Header.View
+import Html exposing (Html, div, h1, text)
 import Standings.View
 import Types
 
@@ -27,13 +28,22 @@ notFound model =
 
 standings : Types.Model -> Html Types.Msg
 standings model =
-    Html.div
+    div
         []
-        [ Standings.View.view model.standings ]
+        [ Header.View.view model.header
+        , Standings.View.view model.standings
+        ]
 
 
 team : Types.Model -> Html Types.Msg
 team model =
-    h1
+    div
         []
-        [ text "Team" ]
+        [ Header.View.view model.header
+        , div
+            []
+            [ h1
+                []
+                [ text "Team" ]
+            ]
+        ]

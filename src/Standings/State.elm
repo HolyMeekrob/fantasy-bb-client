@@ -1,6 +1,5 @@
 module Standings.State exposing (initializeModel, subscriptions, update)
 
-import Header.State
 import Standings.Rest as Rest
 import Standings.Types as Types exposing (League, Model, Msg, Standings)
 
@@ -14,7 +13,6 @@ initializeModel =
                 }
             , teams = []
             }
-      , header = Header.State.initialModel
       , error = ""
       }
     , Rest.getStandings

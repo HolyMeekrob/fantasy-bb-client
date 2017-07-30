@@ -1,5 +1,6 @@
 module State exposing (init, subscriptions, update)
 
+import Header.State
 import Navigation exposing (Location)
 import Routes
 import Standings.State
@@ -12,7 +13,8 @@ initializeModel page =
         ( initialStandings, msg ) =
             Standings.State.initializeModel
     in
-    ( { page = page
+    ( { header = Header.State.initialModel
+      , page = page
       , standings = initialStandings
       }
     , Cmd.map (\x -> Types.StandingsMsg x) msg
