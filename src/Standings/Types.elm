@@ -26,7 +26,6 @@ type alias Team =
     , name : String
     , points : Int
     , activePlayers : Int
-    , url : String
     }
 
 

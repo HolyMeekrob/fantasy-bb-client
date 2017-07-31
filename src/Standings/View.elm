@@ -58,7 +58,7 @@ teamStandings team =
         [ td
             []
             [ a
-                [ href team.url ]
+                [ href <| "#/team/" ++ team.id ]
                 [ text team.name ]
             ]
         , td

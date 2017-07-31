@@ -4,20 +4,38 @@ import Header.State
 import Navigation exposing (Location)
 import Routes
 import Standings.State
+import Team.State
 import Types exposing (Model, Msg)
+
+
+getInitialCommand : Types.Page -> Cmd Msg
+getInitialCommand page =
+    case page of
+        Types.NotFound ->
+            Cmd.none
+
+        Types.Standings ->
+            Cmd.map Types.StandingsMsg Standings.State.initialCommand
+
+        Types.Team id ->
+            Cmd.map Types.TeamMsg <| Team.State.initialCommand id
 
 
 initializeModel : Types.Page -> ( Model, Cmd Msg )
 initializeModel page =
     let
-        ( initialStandings, msg ) =
-            Standings.State.initializeModel
+        initialStandings =
+            Standings.State.initialModel
+
+        initialTeam =
+            Team.State.initialModel
     in
     ( { header = Header.State.initialModel
       , page = page
       , standings = initialStandings
+      , team = initialTeam
       }
-    , Cmd.map (\x -> Types.StandingsMsg x) msg
+    , getInitialCommand page
     )
 
 
@@ -50,10 +68,17 @@ update msg model =
             in
             ( { model | standings = standingsModel }, Cmd.none )
 
+        Types.TeamMsg subaction ->
+            let
+                ( teamModel, teamCmd ) =
+                    Team.State.update subaction model.team
+            in
+            ( { model | team = teamModel }, Cmd.none )
+
 
 navigate : Types.Page -> Model -> ( Model, Cmd Msg )
 navigate page model =
-    ( { model | page = page }, Cmd.none )
+    ( { model | page = page }, getInitialCommand page )
 
 
 subscriptions : Model -> Sub Msg

@@ -1,7 +1,7 @@
 module Standings.Rest exposing (getStandings)
 
 import Http
-import Json.Decode exposing (Decoder, field, int, list, string)
+import Json.Decode exposing (Decoder, int, list, string)
 import Json.Decode.Pipeline exposing (decode, required)
 import Standings.Types as Types
 
@@ -37,4 +37,3 @@ teamDecoder =
         |> required "name" string
         |> required "points" int
         |> required "activePlayers" int
-        |> required "url" string

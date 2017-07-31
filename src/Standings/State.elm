@@ -1,22 +1,25 @@
-module Standings.State exposing (initializeModel, subscriptions, update)
+module Standings.State exposing (initialCommand, initialModel, subscriptions, update)
 
 import Standings.Rest as Rest
 import Standings.Types as Types exposing (League, Model, Msg, Standings)
 
 
-initializeModel : ( Model, Cmd Msg )
-initializeModel =
-    ( { standings =
-            { league =
-                { id = 0
-                , name = ""
-                }
-            , teams = []
+initialModel : Model
+initialModel =
+    { standings =
+        { league =
+            { id = 0
+            , name = ""
             }
-      , error = ""
-      }
-    , Rest.getStandings
-    )
+        , teams = []
+        }
+    , error = ""
+    }
+
+
+initialCommand : Cmd Msg
+initialCommand =
+    Rest.getStandings
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
