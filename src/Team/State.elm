@@ -10,7 +10,7 @@ initialModel =
         { id = ""
         , name = ""
         }
-    , error = ""
+    , error = Nothing
     }
 
 
@@ -23,10 +23,10 @@ update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
         Types.SetTeam (Err _) ->
-            ( { model | error = "Could not retrieve standings" }, Cmd.none )
+            ( { model | error = Just "Could not retrieve standings" }, Cmd.none )
 
         Types.SetTeam (Ok newTeam) ->
-            ( { model | team = newTeam, error = "" }, Cmd.none )
+            ( { model | team = newTeam, error = Nothing }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

@@ -5,7 +5,7 @@ import Http
 
 type alias Model =
     { team : Team
-    , error : String
+    , error : Maybe String
     }
 
 

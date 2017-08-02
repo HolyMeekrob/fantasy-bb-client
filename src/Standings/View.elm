@@ -3,6 +3,7 @@ module Standings.View exposing (view)
 import Html exposing (Html, a, div, h1, input, table, tbody, td, text, thead, tr)
 import Html.Attributes exposing (href)
 import Standings.Types as Types
+import Utils.Html exposing (maybeText)
 
 
 view : Types.Model -> Html msg
@@ -11,7 +12,7 @@ view model =
         []
         [ div
             []
-            [ text model.error ]
+            [ maybeText model.error ]
         , div
             []
             [ h1
