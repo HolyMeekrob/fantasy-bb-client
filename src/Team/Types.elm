@@ -12,6 +12,26 @@ type alias Model =
 type alias Team =
     { id : String
     , name : String
+    , points : Int
+    , owner : User
+    , roster : List Houseguest
+    }
+
+
+type alias User =
+    { id : String
+    , firstName : String
+    , lastName : String
+    , nickname : String
+    }
+
+
+type alias Houseguest =
+    { id : String
+    , firstName : String
+    , lastName : String
+    , points : Int
+    , isActive : Bool
     }
 
 

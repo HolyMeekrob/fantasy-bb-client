@@ -1,7 +1,7 @@
 module Team.Rest exposing (getTeam)
 
 import Http
-import Json.Decode exposing (Decoder, string)
+import Json.Decode exposing (Decoder, bool, int, list, string)
 import Json.Decode.Pipeline exposing (decode, required)
 import Team.Types as Types
 
@@ -21,3 +21,25 @@ teamDecoder =
     decode Types.Team
         |> required "id" string
         |> required "name" string
+        |> required "points" int
+        |> required "owner" userDecoder
+        |> required "roster" (list houseguestDecoder)
+
+
+userDecoder : Decoder Types.User
+userDecoder =
+    decode Types.User
+        |> required "id" string
+        |> required "firstName" string
+        |> required "lastName" string
+        |> required "nickname" string
+
+
+houseguestDecoder : Decoder Types.Houseguest
+houseguestDecoder =
+    decode Types.Houseguest
+        |> required "id" string
+        |> required "firstName" string
+        |> required "lastName" string
+        |> required "points" int
+        |> required "isActive" bool
